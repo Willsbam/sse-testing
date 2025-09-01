@@ -19,12 +19,15 @@ var clientId = 0;
 var clients = {}; // <- Keep a map of attached clients
 
 // Called once for each new client. Note, this response is left open!
-app.get('/events/', function (req, res) {
+app.post('/events/', function (req, res) {
 	req.socket.setTimeout(Number.MAX_VALUE);
 	res.writeHead(200, {
 		'Content-Type': 'text/event-stream', // <- Important headers
 		'Cache-Control': 'no-cache',
-		'Connection': 'keep-alive'
+		'Connection': 'keep-alive',
+		'X-Accel-Buffering': 'no'
+
+
 	});
 	res.write('\n');
 	(function (clientId) {
